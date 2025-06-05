@@ -1,0 +1,180 @@
+  <!doctype html>
+
+<html><!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Weronika Kaźmierczyk</title>
+    <link rel="stylesheet" href="styles.css">
+    <p id="demo"></p>
+ 
+       
+        <div class="links-container">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="gallery.html" class="nav-link">Gallery</a>
+  </div>
+</head>
+<body>
+
+<script>
+var i = 0;
+var txt = 'Weronika Maria Kaźmierczyk';
+var speed = 50;
+
+function typeWriter() {
+  if (i < txt.length) {
+    document.getElementById("demo").innerHTML += txt.charAt(i);
+    i++;
+    setTimeout(typeWriter, speed);
+  }
+}
+typeWriter();
+</script>
+<script src="https://unpkg.com/contentful@latest/dist/contentful.browser.min.js"></script>
+<script>
+  const client = contentful.createClient({
+    space: 'l4a4vd8kuwt6',
+    accessToken: 'n47HZf3C2gTDoYf2uKjOGjC778FRzg11qTd6Qsy_B-o'
+  });
+
+  client.getEntry('UNLX68Ge3YaQqpPNu3GzG')
+    .then(entry => {
+      const images = entry.fields.about || [];
+      const container = document.getElementById('about');
+
+      if (!images.length) {
+        container.innerHTML = '<p>No images found.</p>';
+        return;
+      }
+
+      images.forEach(asset => {
+        const url = 'https:' + asset.fields.file.url; 
+        const alt = asset.fields.title || 'Artwork';
+        const desc = asset.fields.description || '';
+        const img = document.createElement('img');
+
+        img.src = url;
+        img.alt = alt;
+        img.style.width = '200px';
+        img.style.margin = '50px auto';
+        img.style.display = 'block';
+
+        container.appendChild(img);
+        const wrapper = document.createElement('div');
+  wrapper.style.marginBottom = '60px';
+
+  const titleElem = document.createElement('h4');
+  titleElem.textContent = alt;
+
+  const descElem = document.createElement('p');
+  descElem.textContent = desc;
+
+  wrapper.appendChild(img);
+  wrapper.appendChild(descElem);
+  container.appendChild(wrapper);
+  
+  
+      });
+    })
+
+</script>
+    <style>
+        .color1 {
+            height: 100px;
+            width: 100%;
+            top: 0;
+            position: fixed; 
+            background: linear-gradient(to bottom, LightGrey 0%, #ffffff 80%);
+            color: grey;
+            text-align: center;
+            line-height: 80px; 
+            font-size: 52px;
+            font-family: impact;
+        }
+        .color2 {
+            height: 100vh;
+            width: 140px;
+            position: fixed;
+            top:0;
+            left:0;
+            background: LightGrey;
+        }
+        .color3{
+            height: 100vh;
+            width: 140px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            background: LightGrey;
+
+        }
+  #about {
+  display: flex;      
+  width: 100%;
+  justify-content: center; 
+  gap: 600px;               
+  margin-top: 100px;
+  color: grey;
+  height: auto;
+}
+#demo {
+  margin: 70px;
+  top: 250px;
+  font-size: 32px;
+
+}
+ .links-container {
+  position: fixed;
+  top: 50px;
+  width: 100%;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  text-decoration: center;
+  gap: 650px;
+}
+.nav-link {
+  font-size: 32px;
+  font-family: impact;
+  color: grey;
+  top: 50px; 
+  text-decoration: none;
+
+}
+
+.nav-link:hover {
+  color: LightGrey;
+}
+.gallery{
+  font-family: impact;
+  color: grey;
+}
+
+.image-wrapper {
+  width: 200px;           
+ 
+}
+.text{
+  color: grey;
+  text-align: center;
+  height: 100%;
+ line-height: 1.6;
+ margin: 10px;
+}
+
+    </style>
+   
+      <div class="text">
+      <p> Born on January 2003, in Łódź Poland, Weronika is a young painter of Piotr Król school, relying on old master's techniques.   </p>
+
+     
+
+    <div class="color1">About</div>
+    <div class="color2"></div>
+    <div class="color3"></div>
+  
+<div id="about"></div>
+    
+    </body>
+    </html>
+    

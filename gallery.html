@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Weronika Kaźmierczyk</title>
+  <link rel="stylesheet" href="styles.css">
+  
+</head>
+<body>
+  <h1 class="gallery1" >Gallery</h1>
+  <div class="gallery", id="gallery"></div>
+  <div class="links-container">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="about.html" class="nav-link">About</a>
+  
+  </div>
+  
+  
+<script src="https://unpkg.com/contentful@latest/dist/contentful.browser.min.js"></script>
+<script>
+  const client = contentful.createClient({
+    space: 'l4a4vd8kuwt6',
+    accessToken: 'n47HZf3C2gTDoYf2uKjOGjC778FRzg11qTd6Qsy_B-o'
+  });
+
+  client.getEntry('1ENlMQ88oMpwY4KPl1vBhq')
+    .then(entry => {
+      const images = entry.fields.gallery || [];
+      const container = document.getElementById('gallery');
+
+      if (!images.length) {
+        container.innerHTML = '<p>No images found.</p>';
+        return;
+      }
+
+      images.forEach(asset => {
+        const url = 'https:' + asset.fields.file.url; 
+        const alt = asset.fields.title || 'Artwork';
+        const desc = asset.fields.description || '';
+        const img = document.createElement('img');
+
+        img.src = url;
+        img.alt = alt;
+        img.style.width = '400px';
+        img.style.margin = '20px auto';
+        img.style.display = 'block';
+
+        container.appendChild(img);
+        const wrapper = document.createElement('div');
+  wrapper.style.marginBottom = '60px';
+
+  const titleElem = document.createElement('h3');
+  titleElem.textContent = alt;
+
+  const descElem = document.createElement('h3');
+  descElem.textContent = desc;
+
+  wrapper.appendChild(titleElem);
+  wrapper.appendChild(img);
+  wrapper.appendChild(descElem);
+  container.appendChild(wrapper);
+  img.classList.add('framed');
+  
+  
+      });
+    })
+    .catch(err => {
+      console.error('Error loading gallery:', err);
+    });
+</script>
+ <style>
+  .gallery{
+  font-family: courier;
+  color: black;
+  top: 0px;
+  margin-top: 0px;
+  margin: 200px;
+}
+.gallery1{
+  margin: 0;
+  font-size: 52px;
+  color: Grey;
+  top: 0;
+}
+    body {
+      margin: 10px;
+      padding: 0;
+      font-size: 62;
+    }
+       
+        .header-image{
+            width: 10vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .header-image2{
+            width: 10vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 1;
+        }
+         .overlay-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 15%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(60,60,60)5%, rgba(100, 100, 100, 0.7)50%, rgba(255, 255, 255));
+      z-index: 1;
+    }
+     .overlay-gradient2 {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 15%;
+      height: 100%;
+      background: linear-gradient(to left, rgba(60,60,60)5%,  rgba(100, 100, 100, 0.7)50%, rgba(255, 255, 255, 0.95));
+      z-index: 1;
+    }
+  
+    .links-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  gap: 650px;
+}
+.nav-link {
+  font-size: 32px;
+  font-family: impact;
+  color: grey;
+  margin: 50px;
+  text-decoration: none; 
+}
+
+.nav-link:hover {
+  color: LightGrey;
+}
+
+
+</style>
+ 
+     <div class="overlay-gradient"></div>
+      <div class="overlay-gradient2"></div>
+
+
+</body>
+</html>
